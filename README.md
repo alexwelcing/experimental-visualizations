@@ -25,7 +25,7 @@ Complete Turborepo monorepo architecture with TanStack Start + Next.js + tRPC + 
 ├── apps/
 │   ├── indecks/          # Next.js - Client access central
 │   ├── hq-admin/         # Next.js - Admin portal (placeholder)
-│   ├── sales-dashboard/  # TanStack Start - Analytics (placeholder)
+│   ├── sales-dashboard/  # TanStack Start - Analytics app
 │   ├── api/              # Node.js - tRPC API server
 │   └── workers/          # Background job processors (placeholder)
 ├── packages/
@@ -72,6 +72,10 @@ PORT=3001
 # apps/indecks/.env.local
 NEXT_PUBLIC_TRPC_URL=http://localhost:3001/trpc
 NEXT_PUBLIC_COMPANY_ID=your-company-id
+
+# apps/sales-dashboard/.env
+VITE_TRPC_URL=http://localhost:3001/trpc
+VITE_COMPANY_ID=your-company-id
 ```
 
 3. Start Docker services (Postgres, Redis):
@@ -91,6 +95,7 @@ Or start individually:
 ```bash
 cd apps/api && pnpm dev
 cd apps/indecks && pnpm dev
+cd apps/sales-dashboard && pnpm dev
 ```
 
 ### Application URLs
@@ -98,7 +103,7 @@ cd apps/indecks && pnpm dev
 - **API**: http://localhost:3001
 - **Indecks**: http://localhost:3002
 - **HQ Admin**: http://localhost:3003 (to be implemented)
-- **Sales Dashboard**: http://localhost:3004 (to be implemented)
+- **Sales Dashboard**: http://localhost:3004
 
 ## Features
 
@@ -115,6 +120,16 @@ cd apps/indecks && pnpm dev
 - **RadarProfile** - Available with `radar-prod` product grant
 - **ScholarProfile** - Available with `scholar-prod` product grant
 - **SettingsProfile** - Available with `newsvault-prod` product grant
+
+### Analytics Dashboard (Sales Dashboard)
+
+- **Real-time KPIs** - Total users, active users, accounts, and grants
+- **User Growth Metrics** - Track user acquisition and activity rates
+- **Product Adoption Charts** - Visualize product usage across accounts
+- **Revenue Trends** - Monitor revenue and subscription metrics
+- **Top Accounts** - View accounts ranked by user count
+- **Built with TanStack Start** - Modern full-stack React framework
+- **Interactive Charts** - Powered by Recharts
 
 ### Type Safety
 
@@ -176,6 +191,15 @@ docker build -f docker/Dockerfile.api -t hq-platform-api .
 - `company.listAvailableProfiles` - List profiles available to user
 - `company.getProfile` - Get user profile data
 - `company.updateProfile` - Update user profile data
+
+### Analytics Router
+
+- `analytics.getUserGrowth` - Get user growth metrics and activity rates
+- `analytics.getProductAdoption` - Get product adoption statistics
+- `analytics.getAccountMetrics` - Get account and grant metrics
+- `analytics.getProfileUsage` - Get profile usage statistics
+- `analytics.getRevenueMetrics` - Get revenue trends (mock data)
+- `analytics.getTopAccounts` - Get top accounts by user count
 
 ## Zephr Integration
 

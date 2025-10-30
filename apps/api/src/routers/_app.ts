@@ -1,9 +1,10 @@
 import { router } from '../trpc'
 import { companyRouter } from './company'
+import { analyticsRouter } from './analytics'
 
 export const appRouter = router({
   company: companyRouter,
-  // Add more routers for analytics, admin, etc.
+  analytics: analyticsRouter,
 })
 
 export type AppRouter = typeof appRouter
