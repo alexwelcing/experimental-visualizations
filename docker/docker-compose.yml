@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: hq_platform
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+
+  api:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile.api
+    environment:
+      ZEPHR_BASE_URL: ${ZEPHR_BASE_URL}
+      ZEPHR_HMAC_KEY: ${ZEPHR_HMAC_KEY}
+      ZEPHR_HMAC_SECRET: ${ZEPHR_HMAC_SECRET}
+      COMPANY_ID: ${COMPANY_ID}
+      PORT: 3001
+    ports:
+      - '3001:3001'
+    depends_on:
+      - postgres
+      - redis
+
+volumes:
+  postgres_data:
+  redis_data:
